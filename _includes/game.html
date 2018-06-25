@@ -1,1 +1,59 @@
-game!
+<html>
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+</head>
+</html>
+<body>
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+  <script language="javascript">
+  (function(){
+  function solve(input){
+    solved = Array.from(input, e => "T").join("")
+    visited = new Set()
+    q = []
+    visited.add(input)
+    q.push([input])
+    maxLoop = 10000;
+    while(q.length > 0 && maxLoop-- > 0){
+      path = q.shift()
+      node = path[path.length-1]
+      if(node == solved) return path;
+      for(i = 0; i < node.length; i++){
+        next = toggle(node, i)
+        if(!visited.has(next)){
+          newPath = path.slice()
+          newPath.push(next)
+          q.push(newPath)
+        }
+      }
+    }
+    return "shrug"
+  }
+  function toggle(input, i){
+    inputArr = input.split("")
+    inputArr[i] = flip(inputArr[i])
+    if(i > 0) inputArr[i-1] = flip(inputArr[i-1])
+    if(i < input.length-1) inputArr[i+1] = flip(inputArr[i+1])
+    return inputArr.join("")
+  }
+  function flip(s){
+    return s == "T" ? "F" : "T"
+  }
+  function generate(length, moves){
+    puzzle = (new Array(length)).fill("T").join("")
+    for(i = 0; i < moves; i++){
+      j = getRandomInt(length)
+      puzzle = toggle(puzzle, j)
+    }
+    return puzzle;
+  }
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+  // console.log(solve(generate(7,5)))
+  })();
+  </script>
+</body>

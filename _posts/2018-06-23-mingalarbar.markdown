@@ -7,4 +7,4 @@ permalink: /Mingalarbar/
 ---
 Please fiddle with these buttons while I procrastinate to build this site.
 
-{% include game.html %}
+ include game.html 
